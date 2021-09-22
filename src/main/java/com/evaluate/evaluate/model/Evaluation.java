@@ -1,13 +1,21 @@
 package com.evaluate.evaluate.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -31,9 +39,15 @@ public class Evaluation implements Serializable{
     private String note;
     @Column(nullable = false, length = 256, unique = false, updatable = true)
     private String description;
-   
+    
+    @ManyToOne
+    @JsonManagedReference
+    @JoinColumn(nullable = false)
     private Client client;
-    private List<Comment> comments;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "evaluation")
+    @JsonBackReference
+    private List<Comment> comments = new ArrayList<>();
 
     public Evaluation() {
     }

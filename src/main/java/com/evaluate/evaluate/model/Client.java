@@ -1,8 +1,13 @@
 package com.evaluate.evaluate.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Client extends User{
@@ -12,8 +17,14 @@ public class Client extends User{
     @Column(nullable = false, length = 55, unique = false, updatable = true)
     private String city;
     
-    private List<Comment> comments;
-    private List<Evaluation> evaluations;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "client", orphanRemoval = true)
+    @JsonBackReference
+    private List<Comment> comments = new ArrayList<>();
+    @ElementCollection(fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "client", orphanRemoval = true)
+    @JsonBackReference
+    private List<Evaluation> evaluations = new ArrayList<>();
 
     public Client() {
     }

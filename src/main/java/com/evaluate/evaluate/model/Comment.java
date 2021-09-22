@@ -1,11 +1,14 @@
 package com.evaluate.evaluate.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Comment implements Serializable{
@@ -17,7 +20,13 @@ public class Comment implements Serializable{
     @Column(nullable = false, length = 256, unique = false, updatable = true)
     private String description;
     
+    @ManyToOne
+    @JsonManagedReference
+    @JoinColumn(nullable = false)
     private Client client;
+    @ManyToOne
+    @JsonManagedReference
+    @JoinColumn(nullable = false)
     private Evaluation evaluation;
 
     public Comment() {
