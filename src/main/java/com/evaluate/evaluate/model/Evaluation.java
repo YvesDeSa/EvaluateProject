@@ -3,16 +3,33 @@ package com.evaluate.evaluate.model;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+@Entity
 public class Evaluation implements Serializable{
     private static final long serialVersionUID = 1L;
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(nullable = false, length = 50, unique = false, updatable = true)
     private String restaurantName;
+    @Column(nullable = false, length = 20, unique = false, updatable = true)
     private String restaurantCategory;
+    @Column(nullable = false, length = 75, unique = false, updatable = true)
     private String restaurantLocation;
+    @Column(nullable = false)
+    @Temporal(TemporalType.DATE)
     private Calendar date;
-    private String nate;
+    @Column(nullable = false, length = 15, unique = false, updatable = true)
+    private String note;
+    @Column(nullable = false, length = 256, unique = false, updatable = true)
     private String description;
    
     private Client client;
@@ -21,13 +38,13 @@ public class Evaluation implements Serializable{
     public Evaluation() {
     }
 
-    public Evaluation(int id, String restaurantName, String restaurantCategory, String restaurantLocation, Calendar date, String nate, String description, Client client) {
+    public Evaluation(int id, String restaurantName, String restaurantCategory, String restaurantLocation, Calendar date, String note, String description, Client client) {
         this.id = id;
         this.restaurantName = restaurantName;
         this.restaurantCategory = restaurantCategory;
         this.restaurantLocation = restaurantLocation;
         this.date = date;
-        this.nate = nate;
+        this.note = note;
         this.description = description;
         
         this.client = client;
@@ -73,12 +90,12 @@ public class Evaluation implements Serializable{
         this.date = date;
     }
 
-    public String getNate() {
-        return nate;
+    public String getNote() {
+        return note;
     }
 
-    public void setNate(String nate) {
-        this.nate = nate;
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public String getDescription() {

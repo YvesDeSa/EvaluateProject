@@ -1,9 +1,15 @@
 package com.evaluate.evaluate.model;
 
 import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
+@Entity
 public class Client extends User{
+    
+    @Column(nullable = false, length = 55, unique = false, updatable = true)
     private String name;
+    @Column(nullable = false, length = 55, unique = false, updatable = true)
     private String city;
     
     private List<Comment> comments;
