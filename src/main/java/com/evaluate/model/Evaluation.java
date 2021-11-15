@@ -1,13 +1,12 @@
-package com.evaluate.evaluate.model;
+package com.evaluate.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -18,6 +17,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 public class Evaluation implements Serializable{
@@ -25,34 +28,52 @@ public class Evaluation implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
+    
     @Column(nullable = false, length = 50, unique = false, updatable = true)
+    @NotBlank(message = "Nome do restaurante obrigatorio")
+    @Length(min = 2, max = 50 ,message = "O nome do restaurante deve ter entre 2 e 50 digitos.")
     private String restaurantName;
+    
     @Column(nullable = false, length = 20, unique = false, updatable = true)
+    @NotBlank(message = "Categoria do restaurante obrigatorio")
+    @Length(min = 2, max = 20 ,message = "A categoria do restaurante deve ter entre 2 e 20 digitos.")
     private String restaurantCategory;
+    
     @Column(nullable = false, length = 75, unique = false, updatable = true)
+    @NotBlank(message = "Local do restaurante obrigatorio")
+    @Length(min = 2, max = 75 ,message = "O local do restaurante deve ter entre 2 e 75 digitos.")
     private String restaurantLocation;
+    
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
+    @NotNull(message = "data não pode ser nulo")
     private Calendar date;
+    
     @Column(nullable = false, length = 15, unique = false, updatable = true)
+    @NotBlank(message = "Nota é obrigatorio")
+    @Length(min = 3, max = 15 ,message = "A nota deve ter entre 1 e 15 digitos.")
     private String note;
+    
     @Column(nullable = false, length = 256, unique = false, updatable = true)
+    @NotBlank(message = "Descrição é obrigatorio")
+    @Length(min = 3, max = 256 ,message = "A descrição deve ter entre 2 e 50 digitos.")
     private String description;
     
     @ManyToOne
-    @JsonManagedReference
     @JoinColumn(nullable = false)
+    @Valid
+    @NotNull(message = "Cliente invalido")
     private Client client;
-    @ElementCollection(fetch = FetchType.EAGER)
-    @OneToMany(mappedBy = "evaluation")
-    @JsonBackReference
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "evaluation", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Comment> comments = new ArrayList<>();
 
     public Evaluation() {
     }
 
-    public Evaluation(int id, String restaurantName, String restaurantCategory, String restaurantLocation, Calendar date, String note, String description, Client client) {
+    public Evaluation(Long id, String restaurantName, String restaurantCategory, String restaurantLocation, Calendar date, String note, String description, Client client) {
         this.id = id;
         this.restaurantName = restaurantName;
         this.restaurantCategory = restaurantCategory;
@@ -64,11 +85,11 @@ public class Evaluation implements Serializable{
         this.client = client;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -139,7 +160,7 @@ public class Evaluation implements Serializable{
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 89 * hash + this.id;
+        hash = (int) (89 * hash + this.id);
         return hash;
     }
 
@@ -157,6 +178,5 @@ public class Evaluation implements Serializable{
         final Evaluation other = (Evaluation) obj;
         return this.id == other.id;
     }
-    
-    
+     
 }

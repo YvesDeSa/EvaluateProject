@@ -1,28 +1,29 @@
-package com.evaluate.evaluate.model;
+package com.evaluate.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Admin extends User{
     
     @Column(nullable = false, unique = false, updatable = true)
-    private int token;
+    @NotNull(message = "token não pode ser nulo")
+    private Long token;
 
     public Admin() {
-        
     }
 
-    public Admin(int token, int id, String email, String login, String password) {
+    public Admin(Long token, Long id, String email, String login, String password) {
         super(id, email, login, password);
         this.token = token;
     }
 
-    public int getToken() {
+    public Long getToken() {
         return token;
     }
 
-    public void setToken(int token) {
+    public void setToken(Long token) {
         this.token = token;
     }
  
