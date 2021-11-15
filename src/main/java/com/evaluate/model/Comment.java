@@ -1,20 +1,45 @@
-package com.evaluate.evaluate.model;
+package com.evaluate.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
-        
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
+
+@Entity
 public class Comment implements Serializable{
     private static final long serialVersionUID = 1L;
     
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @Column(nullable = false, length = 256, unique = false, updatable = true)
+    @NotBlank(message = "Descrição obrigatorio")
+    @Length(min = 3, max = 256 ,message = "A descrição deve ter entre 3 e 256 digitos.")
     private String description;
     
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    @NotNull(message = "cliente não pode ser nulo")
     private Client client;
+    
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    @NotNull(message = "avaliação não pode ser nulo")
     private Evaluation evaluation;
 
     public Comment() {
     }
 
-    public Comment(int id, String description, Client client, Evaluation evaluation) {
+    public Comment(Long id, String description, Client client, Evaluation evaluation) {
         this.id = id;
         this.description = description;
         this.client = client;
@@ -22,11 +47,11 @@ public class Comment implements Serializable{
         this.evaluation = evaluation;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -57,7 +82,7 @@ public class Comment implements Serializable{
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 79 * hash + this.id;
+        hash = (int) (79 * hash + this.id);
         return hash;
     }
 
