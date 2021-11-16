@@ -1,0 +1,14 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
+    <head th:replace="~{fragments :: import-css(title='Evaluation System')}" >
+        <title>...</title>
+    </head>
+    <body>
+        <div th:replace="~{fragments :: menu-bar(page = '')}" ></div>
+        
+        <div class="container-fluid px-0" align="center" >
+            <img th:src="@{~/images/background.jpg}" width="100%"  style="opacity: 15%"/>
+        </div>
+        
+        <div th:replace="~{fragments :: imports-js}" />
+    </body>
+</html>

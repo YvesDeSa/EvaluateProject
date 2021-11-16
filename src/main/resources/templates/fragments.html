@@ -1,0 +1,45 @@
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
+    <head th:fragment="import-css(title)" >
+        <title th:text="${tittle}" >Evaluation Application</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link th:href="@{~/webjars/bootstrap/5.1.0/css/bootstrap.min.css}" rel="stylesheet" />
+    </head>
+    <body>
+        <div th:fragment="menu-bar(page)">
+            <div class="container-fluid px-0">
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                    <a class="navbar-brand ml-1" href="/" >
+                        <img th:src="@{~/images/logo.png}" alt="Logo" class="d-inline-block align-top" width="30" height="30"/>
+                        Evaluation Application
+                    </a>
+                    
+                    <button class="navbar-toggler pr-1" type="button" data-toggler="collapse" data-target="#textNavbar" aria-controls="textNavbar" aria-expanded="false" aria-label="alternar navegação">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    
+                    <div class="collapse navbar-collapse" id="textNavbar">
+                        <ul class="navbar-nav mr-auto" >
+                            <li class="nav-item" th:cellpadding="@{page == 'client' ? 'active' : ''}" >
+                                <a class="nav-link" th:href="@{~/client}" >Client</a>
+                            </li>
+                            <li class="nav-item" th:cellpadding="@{page == 'admin' ? 'active' : ''}" >
+                                <a class="nav-link" th:href="@{~/admin}" >Admin</a>
+                            </li><li class="nav-item" th:cellpadding="@{page == 'evaluation' ? 'active' : ''}" >
+                                <a class="nav-link" th:href="@{~/evaluation}" >Evaluation</a>
+                            </li>
+                            <li class="nav-item" th:cellpadding="@{page == 'comment' ? 'active' : ''}" >
+                                <a class="nav-link" th:href="@{~/comment}" >Comment</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        
+        <div th:fragment="imports-js">
+            <script th:href="@{~/webjars/jquery/3.5.1/js/jquery.min.js}" />
+            <script th:href="@{~/webjars/bootstrap/5.1.0/js/bootstrap.bundle.min.js}" />
+        </div>
+    </body>
+</html>

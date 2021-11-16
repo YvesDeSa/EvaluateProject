@@ -14,6 +14,6 @@ public interface EvaluationRepository extends JpaRepository<Evaluation, Long>{
     @Query("SELECT e FROM Evaluation e WHERE e.client = :client")
     public List<Evaluation> findByClient(@Param("client")long client);
     
-    @Query("SELECT c FROM Comment c WHERE c.evaluation = :id")
-    public List<Comment> findByComment(@Param("id")long id);
+    @Query("SELECT c FROM Comment c WHERE c.evaluation.id = :id")
+    public List<Comment> findByComments(@Param("id")long id);
 }

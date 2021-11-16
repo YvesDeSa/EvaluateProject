@@ -53,7 +53,11 @@ public class ClientService {
     public Client update(Client c){
         Optional<Client> obj = findById(c.getId());
        
-        return repo.save(c);
+        try{
+            return repo.save(c);
+        }catch(Exception e){
+            throw new RuntimeException("Falha ao atualizar cliente");
+        }
     }
     
     public void delete(long id){

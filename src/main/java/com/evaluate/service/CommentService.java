@@ -25,8 +25,8 @@ public class CommentService {
     
     public Comment findById(long id){
         Comment result = repo.findById(id);
-        if(result.isEmpty()){
-            throw new NotFoundException("admin não encontrado");
+        if(result == null){
+            throw new NotFoundException("Comentario não encontrado");
         }
         return result;
     }
@@ -35,14 +35,18 @@ public class CommentService {
         try{
             return repo.save(c);
         }catch(Exception e){
-            throw new RuntimeException("Falha ao salvar Admn");
+            throw new RuntimeException("Falha ao salvar Comentario");
         }
     }
     
     public Comment update(Comment c){
         Comment obj = findById(c.getId());
-        
-        return repo.save(c);
+        try{
+          return repo.save(c);  
+        }catch(Exception e){
+            throw new RuntimeException("Falha ao ataulizar Comentario");
+        }
+  
     }
     
     public void delete(int id){
@@ -51,7 +55,7 @@ public class CommentService {
         try{
             repo.delete(obj);
         }catch(Exception e){
-            throw new RuntimeException("Falha ao deletar cliente");
+            throw new RuntimeException("Falha ao deletar Comentario");
         }
     }
 }

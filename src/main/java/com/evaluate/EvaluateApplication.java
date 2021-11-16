@@ -52,6 +52,15 @@ public class EvaluateApplication  implements CommandLineRunner{
        
        clientRepo.save(client1);
        
+       Client client2 = new Client();
+       client2.setLogin("monicaGS");
+       client2.setPassword("ffdrs");
+       client2.setEmail("MGS@gmail.com");
+       client2.setName("Monica");
+       client2.setCity("Marataizes");
+       
+       clientRepo.save(client2);
+       
        Evaluation evaluation1 = new Evaluation();
        evaluation1.setRestaurantName("carne aqui");
        evaluation1.setRestaurantCategory("carne");
@@ -64,17 +73,25 @@ public class EvaluateApplication  implements CommandLineRunner{
        evaluation1.setClient(client1);
        
        evaluationRepo.save(evaluation1);
-            client1.setEvaluations(List.of(evaluation1));
+       
+       client1.setEvaluations(List.of(evaluation1));
        
        Comment comment1 = new Comment();
        comment1.setEvaluation(evaluation1);
-       comment1.setClient(client1);
+       comment1.setClient(client2);
        comment1.setDescription("otimo comentario");
        
        commentRepo.save(comment1);
        
-       client1.setComments(List.of(comment1));
+       evaluation1.setComments(List.of(comment1));
+       evaluationRepo.save(evaluation1);
        
+       System.out.println(evaluation1);
+       
+       client2.setComments(List.of(comment1));
+       clientRepo.save(client2);
+       
+       System.out.println(client2);
     }
 
 }
