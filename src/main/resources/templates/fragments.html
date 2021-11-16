@@ -3,7 +3,7 @@
         <title th:text="${tittle}" >Evaluation Application</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link th:href="@{~/webjars/bootstrap/5.1.0/css/bootstrap.min.css}" rel="stylesheet" />
+        <link th:href="@{~/webjars/bootstrap/4.5.0/css/bootstrap.min.css}" rel="stylesheet" />
     </head>
     <body>
         <div th:fragment="menu-bar(page)">
@@ -20,16 +20,16 @@
                     
                     <div class="collapse navbar-collapse" id="textNavbar">
                         <ul class="navbar-nav mr-auto" >
-                            <li class="nav-item" th:cellpadding="@{page == 'client' ? 'active' : ''}" >
-                                <a class="nav-link" th:href="@{~/client}" >Client</a>
+                            <li class="nav-item" th:cellpadding="@{page == 'clients' ? 'active' : ''}" >
+                                <a class="nav-link" th:href="@{~/client}" >Clients</a>
                             </li>
                             <li class="nav-item" th:cellpadding="@{page == 'admin' ? 'active' : ''}" >
-                                <a class="nav-link" th:href="@{~/admin}" >Admin</a>
-                            </li><li class="nav-item" th:cellpadding="@{page == 'evaluation' ? 'active' : ''}" >
-                                <a class="nav-link" th:href="@{~/evaluation}" >Evaluation</a>
+                                <a class="nav-link" th:href="@{~/admin}" >Admins</a>
+                            </li><li class="nav-item" th:cellpadding="@{page == 'evaluations' ? 'active' : ''}" >
+                                <a class="nav-link" th:href="@{~/evaluations}" >Evaluations</a>
                             </li>
                             <li class="nav-item" th:cellpadding="@{page == 'comment' ? 'active' : ''}" >
-                                <a class="nav-link" th:href="@{~/comment}" >Comment</a>
+                                <a class="nav-link" th:href="@{~/comment}" >Comments</a>
                             </li>
                         </ul>
                     </div>
@@ -39,7 +39,7 @@
         
         <div th:fragment="imports-js">
             <script th:href="@{~/webjars/jquery/3.5.1/js/jquery.min.js}" />
-            <script th:href="@{~/webjars/bootstrap/5.1.0/js/bootstrap.bundle.min.js}" />
+            <script th:href="@{~/webjars/bootstrap/4.5.0/js/bootstrap.bundle.min.js}" />
         </div>
     </body>
 </html>

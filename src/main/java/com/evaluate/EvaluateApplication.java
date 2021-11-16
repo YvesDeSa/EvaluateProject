@@ -75,6 +75,7 @@ public class EvaluateApplication  implements CommandLineRunner{
        evaluationRepo.save(evaluation1);
        
        client1.setEvaluations(List.of(evaluation1));
+       clientRepo.save(client1);
        
        Comment comment1 = new Comment();
        comment1.setEvaluation(evaluation1);
@@ -86,12 +87,9 @@ public class EvaluateApplication  implements CommandLineRunner{
        evaluation1.setComments(List.of(comment1));
        evaluationRepo.save(evaluation1);
        
-       System.out.println(evaluation1);
-       
        client2.setComments(List.of(comment1));
        clientRepo.save(client2);
        
-       System.out.println(client2);
     }
 
 }

@@ -15,5 +15,5 @@ public interface ClientRepository extends JpaRepository<Client, Long>{
     public Client findByLogin(String login);  
     
     @Query("SELECT c FROM Comment c WHERE c.client.id = :id")
-    public List<Comment> findByComment(Long id);
+    public List<Comment> findByComments(Long id);
 }

@@ -1,6 +1,7 @@
 package com.evaluate.service;
 
 import com.evaluate.exception.NotFoundException;
+import com.evaluate.model.Comment;
 import com.evaluate.model.Evaluation;
 import com.evaluate.repository.EvaluationRepository;
 import java.util.List;
@@ -26,6 +27,8 @@ public class EvaluationService {
     
     public Optional<Evaluation> findById(long id){
         Optional<Evaluation> result = repo.findById(id);
+        result.get().setComments(repo.findByComments(id));
+        
         if(result.isEmpty()){
             throw new NotFoundException("Avaliação não encontrado");
         }
@@ -33,6 +36,8 @@ public class EvaluationService {
     }
     
     public Evaluation save(Evaluation c){
+        
+        
         try{
             return repo.save(c);
         }catch(Exception e){

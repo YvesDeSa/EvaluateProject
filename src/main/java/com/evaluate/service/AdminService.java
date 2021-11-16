@@ -45,7 +45,12 @@ public class AdminService {
     
     public Admin update(Admin c){
         Optional<Admin> obj = findById(c.getId());
-        return repo.save(c);
+        
+        try{
+            return repo.save(c);
+        }catch(Exception e){
+            throw new RuntimeException("Falha ao atualizar Admn");
+        }
     }
     
     public void delete(int id){

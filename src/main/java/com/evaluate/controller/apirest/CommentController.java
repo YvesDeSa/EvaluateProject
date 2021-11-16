@@ -1,4 +1,4 @@
-package com.evaluate.controller;
+package com.evaluate.controller.apirest;
 
 import com.evaluate.model.Comment;
 import com.evaluate.service.CommentService;

@@ -1,4 +1,4 @@
-package com.evaluate.controller;
+package com.evaluate.controller.apirest;
 
 import com.evaluate.model.Client;
 import com.evaluate.service.ClientService;

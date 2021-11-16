@@ -28,6 +28,8 @@ public class ClientService {
     
     public Optional<Client> findById(long id){
         Optional<Client> result = repo.findById(id);
+        result.get().setComments(repo.findByComments(id));
+        
         if(result.isEmpty()){
             throw new NotFoundException("Cliente não encontrado");
         }
@@ -52,9 +54,9 @@ public class ClientService {
     
     public Client update(Client c){
         Optional<Client> obj = findById(c.getId());
-       
+        
         try{
-            return repo.save(c);
+            return repo.save(obj.get());
         }catch(Exception e){
             throw new RuntimeException("Falha ao atualizar cliente");
         }
