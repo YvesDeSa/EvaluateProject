@@ -2,6 +2,7 @@ package com.evaluate.repository;
 
 import com.evaluate.model.Client;
 import com.evaluate.model.Comment;
+import com.evaluate.model.Evaluation;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,5 +17,5 @@ public interface CommentRepository extends JpaRepository<Comment, Long>{
     
     public Client findByClient(long clientId);
     
-    public List<Comment> findByEvaluation(long evaluationId);
+    public Evaluation findByEvaluation(long evaluationId);
 }

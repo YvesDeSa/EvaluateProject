@@ -1,5 +1,6 @@
 package com.evaluate.controller.views;
 
+import com.evaluate.model.Evaluation;
 import com.evaluate.service.EvaluationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,5 +18,11 @@ public class EvaluationViewController {
     public String getAll(Model model){
         model.addAttribute("evaluations", service.findAll());
         return "evaluations";
+    }
+    
+    @GetMapping(path = "/evaluation")
+    public String addOne(Model model){
+        model.addAttribute("evaluation", new Evaluation());
+        return "formEvaluation";
     }
 }

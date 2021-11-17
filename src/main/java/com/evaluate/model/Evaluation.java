@@ -1,14 +1,15 @@
 package com.evaluate.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,6 +22,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Evaluation implements Serializable{
@@ -48,6 +50,8 @@ public class Evaluation implements Serializable{
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     @NotNull(message = "data não pode ser nulo")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private Calendar date;
     
     @Column(nullable = false, length = 15, unique = false, updatable = true)
@@ -64,10 +68,10 @@ public class Evaluation implements Serializable{
     @JoinColumn(nullable = false)
     @Valid
     @NotNull(message = "Cliente invalido")
+    @JsonIgnore
     private Client client;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "evaluation", fetch = FetchType.LAZY)
-    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "evaluation")
     private List<Comment> comments = new ArrayList<>();
 
     public Evaluation() {
@@ -176,7 +180,7 @@ public class Evaluation implements Serializable{
             return false;
         }
         final Evaluation other = (Evaluation) obj;
-        return this.id == other.id;
+        return Objects.equals(this.id, other.id);
     }
      
 }

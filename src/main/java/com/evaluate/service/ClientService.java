@@ -28,7 +28,6 @@ public class ClientService {
     
     public Optional<Client> findById(long id){
         Optional<Client> result = repo.findById(id);
-        result.get().setComments(repo.findByComments(id));
         
         if(result.isEmpty()){
             throw new NotFoundException("Cliente não encontrado");

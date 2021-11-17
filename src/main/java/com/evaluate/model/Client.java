@@ -1,12 +1,10 @@
 package com.evaluate.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
@@ -24,12 +22,10 @@ public class Client extends User{
     @Length(min = 3, max = 55 ,message = "A cidade deve ter entre 3 e 55 digitos.")
     private String city;
     
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "client", orphanRemoval = true, fetch = FetchType.LAZY)
-    @JsonIgnore
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "client", orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
     
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "client", orphanRemoval = true, fetch = FetchType.LAZY)
-    @JsonIgnore
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "client", orphanRemoval = true)
     private List<Evaluation> evaluations = new ArrayList<>();
 
     public Client() {

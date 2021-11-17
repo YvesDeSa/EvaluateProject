@@ -1,5 +1,6 @@
 package com.evaluate.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,11 +29,13 @@ public class Comment implements Serializable{
     @ManyToOne
     @JoinColumn(nullable = false)
     @NotNull(message = "cliente não pode ser nulo")
+    @JsonIgnore
     private Client client;
     
     @ManyToOne
     @JoinColumn(nullable = false)
     @NotNull(message = "avaliação não pode ser nulo")
+    @JsonIgnore
     private Evaluation evaluation;
 
     public Comment() {

@@ -5,35 +5,42 @@
     <body>
         <div th:replace="~{fragments :: menu-bar(page = 'evaluations')}" ></div>
         
-        <div class="container" style="margin-top: 10px"> 
+        <div class="container " style="margin-top: 30px"> 
             <div class="card-header">
-                <h4>
+                <h3>
                     Evaluations
                 <a class="btn btn-primary float-right" role="button" th:href="@{~/evaluations/evaluation}">Create evaluation</a>
-                </h4> 
+                </h3> 
             </div>
             
-            <div class="card" th:each="evaluation : ${evaluations}" >
+            <div class="card" style="margin-top: 10px" th:each="evaluation : ${evaluations}" >
                 <div class="card-body">
-                    <h3>Restaurant details</h3>
-                    <h6 class="card-title">
+                    <h4>Restaurant details</h4>
+                    <p class="card-title">
                         Name: <span th:text="${evaluation.restaurantName}"> </span> <br/>
                         Category: <span th:text="${evaluation.restaurantCategory}"> </span> <br/>
                         Location: <span th:text="${evaluation.restaurantLocation}"> </span> <br/>
-                    </h6> 
+                    </p> 
                     
-                    <h3>Evaluation details</h3>
-                    <h6 class="card-title">
+                    <h4>Evaluation details</h4>
+                    <p class="card-title">
                         Note: <span th:text="${evaluation.note}"> </span> <br/>
                         Description <span th:text="${evaluation.description}"> </span> <br/>
-                        Date: <!-- <span  th:text="${evaluation.date}"> </span>  --><br/>
-                    </h6> 
+                        Date:<!-- <span  th:text="${evaluation.date}"> </span> <br/> --> 
+                    </p> 
                     
-                    <h3>Client details</h3>
+                    <h4>Comments</h4>
+                    <div class="card-" th:each="comment : ${evaluation.comments}" >
+                        <p class="card-title">
+                           comentarios : <span th:text="${evaluation.description}"> </span> <br/>
+                        </p> 
+                    </div>
                     
-                        Date: <!-- <span  th:text="${evaluation.date}"> </span>  --><br/>
-   
-                    
+                    <div class="card-body">
+                        <a th:href="@{~/evaluations/comment/}" class="btn btn-success" >Commented</a>
+                        <a th:href="@{'~/evaluations/evaluation/'+${evaluation.id}}" class="btn btn-warning" >Edit evaluation</a>
+                        <a th:href="@{'~/evaluations/evaluation/'+${evaluation.id}}" class="btn btn-danger" >Delete evaluation</a>    
+                    </div>
                 </div>
             </div>
         </div>

@@ -27,7 +27,6 @@ public class EvaluationService {
     
     public Optional<Evaluation> findById(long id){
         Optional<Evaluation> result = repo.findById(id);
-        result.get().setComments(repo.findByComments(id));
         
         if(result.isEmpty()){
             throw new NotFoundException("Avaliação não encontrado");
