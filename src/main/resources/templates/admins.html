@@ -1,0 +1,35 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
+    <head th:replace="~{fragments :: import-css(title='Evaluation System')}" >
+        <title>...</title>
+    </head>
+    <body>
+        <div th:replace="~{fragments :: menu-bar(page = 'admins')}" ></div>
+        
+        <div class="container " style="margin-top: 30px"> 
+            <div class="card-header">
+                <h3>
+                    Admins
+                <a class="btn btn-primary float-right" role="button" th:href="@{~/admins/admin}">Create evaluation</a>
+                </h3> 
+            </div>
+            
+            <div class="card" style="margin-top: 10px" th:each="admin : ${admins}" >
+                <div class="card-body">
+                    <h4>Restaurant details</h4>
+                    <p class="card-title">
+                        Email: <span th:text="${admin.email}"> </span> <br/>
+                        Login: <span th:text="${admin.login}"> </span> <br/>
+                        Token <span th:text="${admin.token}"> </span> <br/>
+                    </p> 
+          
+                    <div class="card-body">
+                        <a th:href="@{'~/admins/admin/'+${admin.id}}" class="btn btn-warning" >Edit admin</a>
+                        <a th:href="@{'~/admins/'+${admin.id}+'/delete'}" class="btn btn-danger" >Delete admin</a>    
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div th:replace="~{fragments :: imports-js}" />
+    </body>
+</html>

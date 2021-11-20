@@ -65,7 +65,7 @@ public class EvaluateApplication  implements CommandLineRunner{
        evaluation1.setRestaurantName("carne aqui");
        evaluation1.setRestaurantCategory("carne");
        evaluation1.setRestaurantLocation("Campos");
-       evaluation1.setNote("bom");
+       evaluation1.setNote(5);
        evaluation1.setDescription("otimo atendimento");
        Calendar date = Calendar.getInstance();
        date.set(2020,10,10);

@@ -1,7 +1,6 @@
 package com.evaluate.service;
 
 import com.evaluate.exception.NotFoundException;
-import com.evaluate.model.Comment;
 import com.evaluate.model.Evaluation;
 import com.evaluate.repository.EvaluationRepository;
 import java.util.List;
@@ -22,6 +21,7 @@ public class EvaluationService {
     }
     
     public List<Evaluation> findAll (){
+         
         return (List<Evaluation>) repo.findAll();
     }
     
@@ -35,8 +35,6 @@ public class EvaluationService {
     }
     
     public Evaluation save(Evaluation c){
-        
-        
         try{
             return repo.save(c);
         }catch(Exception e){
@@ -46,10 +44,15 @@ public class EvaluationService {
     
     public Evaluation update(Evaluation c){
         Optional<Evaluation> obj = findById(c.getId());
-        return repo.save(c);
+        try{
+            c.setId(obj.get().getId());
+            return repo.save(c);
+        }catch(Exception e){
+            throw new RuntimeException("Falha ao Atualizar Avaliação");
+        }
     }
     
-    public void delete(int id){
+    public void delete(Long id){
         Optional<Evaluation> obj = findById(id);
         try{
             repo.delete(obj.get());

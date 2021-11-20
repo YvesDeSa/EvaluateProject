@@ -26,7 +26,7 @@ public class EvaluationController {
     public ResponseEntity getAll( 
             @RequestParam(name = "page", defaultValue = "0", required = false) int page,
             @RequestParam(name = "size", defaultValue = "10", required = false) int size){
-        
+
         return ResponseEntity.ok(service.findAll(page, size));
     }
     
@@ -53,7 +53,7 @@ public class EvaluationController {
     }
     
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity delete(@PathVariable("id") int id){
+    public ResponseEntity delete(@PathVariable("id") Long id){
         service.delete(id);
         return ResponseEntity.ok().build();
     }

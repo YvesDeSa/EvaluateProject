@@ -36,7 +36,7 @@ public class ClientService {
     }
     
     public Client save(Client c){
-        verificaLogin(c.getLogin());
+        verificaLogin(c.getLogin(), c.getEmail());
         try{
             return repo.save(c);
         }catch(Exception e){
@@ -55,7 +55,8 @@ public class ClientService {
         Optional<Client> obj = findById(c.getId());
         
         try{
-            return repo.save(obj.get());
+            c.setId(obj.get().getId());
+            return repo.save(c);
         }catch(Exception e){
             throw new RuntimeException("Falha ao atualizar cliente");
         }
@@ -64,8 +65,6 @@ public class ClientService {
     public void delete(long id){
         Optional<Client> obj = findById(id);
         
-        verificarDadosDoCliente(obj.get());
-        
         try{
             repo.delete(obj.get());
         }catch(Exception e){
@@ -73,16 +72,14 @@ public class ClientService {
         }
     }
     
-    private void verificaLogin(String login){
-        List<User> result = (List<User>) repo.findByLogin(login);
-        if(!result.isEmpty()){
+    private void verificaLogin(String login, String email){
+        User result =  repo.findByLogin(login);
+        if(result != null){
             throw new RuntimeException("Login ja cadastrado");
         }
-    }
-    
-    private void verificarDadosDoCliente(Client c){
-        if(!c.getComments().isEmpty()){
-            throw new RuntimeException("Cliente possui comentarios ou avaliações e nao pode ser excluido");
-        }
+         User resultEmail = repo.findByEmail(email);
+        if(resultEmail != null){
+            throw new RuntimeException("Email ja cadastrado");
+        }  
     }
 }

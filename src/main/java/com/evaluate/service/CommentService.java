@@ -42,6 +42,7 @@ public class CommentService {
     public Comment update(Comment c){
         Comment obj = findById(c.getId());
         try{
+           c.setId(obj.getId());
           return repo.save(c);  
         }catch(Exception e){
             throw new RuntimeException("Falha ao ataulizar Comentario");
@@ -49,7 +50,7 @@ public class CommentService {
   
     }
     
-    public void delete(int id){
+    public void delete(Long id){
         Comment obj = findById(id);
         
         try{

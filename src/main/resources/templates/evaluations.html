@@ -26,20 +26,21 @@
                     <p class="card-title">
                         Note: <span th:text="${evaluation.note}"> </span> <br/>
                         Description <span th:text="${evaluation.description}"> </span> <br/>
-                        Date:<!-- <span  th:text="${evaluation.date}"> </span> <br/> --> 
+                        Date: <span  th:text="${evaluation.date.get(5)+'/'+(evaluation.date.get(2)+1)+'/'+evaluation.date.get(1)}"> </span> <br/>
+                        Client: <span th:text="${evaluation.client.login}"> </span> <br/>
                     </p> 
                     
                     <h4>Comments</h4>
                     <div class="card-" th:each="comment : ${evaluation.comments}" >
                         <p class="card-title">
-                           comentarios : <span th:text="${evaluation.description}"> </span> <br/>
+                            <span th:text="${comment.client.login}" > </span> - <span th:text="${comment.description}"> </span> <br/>
                         </p> 
                     </div>
                     
                     <div class="card-body">
-                        <a th:href="@{~/evaluations/comment/}" class="btn btn-success" >Commented</a>
+                        <a th:href="@{'~/comments/comment/'+${evaluation.id}}" class="btn btn-success" >Commented</a>
                         <a th:href="@{'~/evaluations/evaluation/'+${evaluation.id}}" class="btn btn-warning" >Edit evaluation</a>
-                        <a th:href="@{'~/evaluations/evaluation/'+${evaluation.id}}" class="btn btn-danger" >Delete evaluation</a>    
+                        <a th:href="@{'~/evaluations/'+${evaluation.id}+'/delete'}" class="btn btn-danger" >Delete evaluation</a>    
                     </div>
                 </div>
             </div>

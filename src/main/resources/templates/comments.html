@@ -1,0 +1,35 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
+    <head th:replace="~{fragments :: import-css(title='Evaluation System')}" >
+        <title>...</title>
+    </head>
+    <body>
+        <div th:replace="~{fragments :: menu-bar(page = 'Comments')}" ></div>
+        
+        <div class="container " style="margin-top: 30px"> 
+            <div class="card-header">
+                <h3>
+                    Comments
+                    <a class="btn btn-primary float-right" role="button" th:href="@{~/comments/comment}">Create Comment</a>
+                </h3> 
+            </div>
+            
+            <div class="card" style="margin-top: 10px" th:each="comment : ${comments}">
+                <div class="card-body">
+                    <h4>Comments details</h4>
+                    <p class="card-title">
+                        Name: <span th:text="${comment.client.name}"> </span> <br/>
+                        Email: <span th:text="${comment.client.email}"> </span> <br/>
+                        Comment: <span th:text="${comment.description}"> </span> <br/>
+                    </p> 
+                    
+                    <div class="card-body">
+                        <a th:href="@{'~/comments/comment/'+${comment.id}}" class="btn btn-warning" >Edit evaluation</a>
+                        <a th:href="@{'~/comments/'+${comment.id}+'/delete'}" class="btn btn-danger" >Delete evaluation</a>    
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div th:replace="~{fragments :: imports-js}" />
+    </body>
+</html>

@@ -1,7 +1,8 @@
 package com.evaluate.controller.views;
 
-import com.evaluate.model.Evaluation;
+import com.evaluate.model.Comment;
 import com.evaluate.service.ClientService;
+import com.evaluate.service.CommentService;
 import com.evaluate.service.EvaluationService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,81 +17,87 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(path = "/evaluations")
-public class EvaluationViewController {
+@RequestMapping(path = "/comments")
+public class CommentViewController {
     @Autowired
-    private EvaluationService service;
+    private CommentService service;
+    @Autowired
+    private EvaluationService evaluation;
     @Autowired
     private ClientService client;
     
     @GetMapping
     public String getAll(Model model){
-        model.addAttribute("evaluations", service.findAll());
+        model.addAttribute("comments", service.findAll());
         model.addAttribute("client", client.findAll());
-        return "evaluations";
+        
+        return "comments";
     }
     
-    @GetMapping(path = "/evaluation")
+    @GetMapping(path = "/comment")
     public String evaluations(Model model){
-        model.addAttribute("evaluation", new Evaluation());
+        model.addAttribute("comment", new Comment());
         model.addAttribute("client", client.findAll());
-        return "formEvaluation";
+        model.addAttribute("evaluation", evaluation.findAll());
+        return "formComment";
     }
     
-    @PostMapping(path = "/evaluation")
-    public String save(@Valid @ModelAttribute Evaluation evaluation, BindingResult result , Model model){
+    @PostMapping(path = "/comment")
+    public String save(@Valid @ModelAttribute Comment comment, BindingResult result , Model model){
         model.addAttribute("client", client.findAll());
         
         if(result.hasErrors()){
             model.addAttribute("msgErros", result.getAllErrors());
-            return "formEvaluation";
+            return "formComment";
         }
         
-        evaluation.setId(null);
+        comment.setId(null);
         
         try {
-            service.save(evaluation);
+            service.save(comment);
             model.addAttribute("msgSuccess", "Evaluation done successfully");
-            model.addAttribute("evaluation", new Evaluation());
-            return "formEvaluation";
+            model.addAttribute("comment", new Comment());
+            return "formComment";
         }catch (Exception e) {
             model.addAttribute("msgErros", new ObjectError("Evaluation", e.getMessage()));
-            return "formEvaluation";
+            return "formComment";
         }
     }
     
-    @GetMapping(path = "/evaluation/{id}")
+    @GetMapping(path = "/comment/{id}")
     public String evaluation( @PathVariable("id") Long id, Model model){
-        model.addAttribute("evaluation", service.findById(id).get());
+        model.addAttribute("comment", service.findById(id));
         model.addAttribute("client", client.findAll());
-        return "formEvaluation";
+        model.addAttribute("evaluation", evaluation.findAll());
+        return "formComment";
     }
     
-    @PostMapping(path = "/evaluation/{id}")
-    public String update(@Valid @ModelAttribute Evaluation evaluation, @PathVariable("id") Long id, BindingResult result , Model model){
+    @PostMapping(path = "/comment/{id}")
+    public String update(@Valid @ModelAttribute Comment comment, @PathVariable("id") Long id, BindingResult result , Model model){
         model.addAttribute("client", client.findAll());
+        model.addAttribute("evaluation", evaluation.findAll());
         
         if(result.hasErrors()){
             model.addAttribute("msgErros", result.getAllErrors());
-            return "formEvaluation";
+            return "formComment";
         }
         
-        evaluation.setId(id);
+        comment.setId(id);
         
         try {
-            service.update(evaluation);
+            service.update(comment);
             model.addAttribute("msgSuccess", "Current evaluation successfully completed");
-            model.addAttribute("evaluation", evaluation);
-            return "formEvaluation";
+            model.addAttribute("comment", comment);
+            return "formComment";
         }catch (Exception e) {
-            model.addAttribute("msgErros", new ObjectError("Evaluation", e.getMessage()));
-            return "formEvaluation";
+            model.addAttribute("msgErros", new ObjectError("Comment", e.getMessage()));
+            return "formComment";
         }
     }
     
     @GetMapping(path = "/{id}/delete")
     public String deletar(@PathVariable("id") Long id) {
         service.delete(id);
-        return "redirect:/evaluations";
+        return "redirect:/comments";
     }
 }

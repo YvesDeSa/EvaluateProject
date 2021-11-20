@@ -50,14 +50,13 @@ public class Evaluation implements Serializable{
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     @NotNull(message = "data não pode ser nulo")
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @JsonFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Calendar date;
     
     @Column(nullable = false, length = 15, unique = false, updatable = true)
-    @NotBlank(message = "Nota é obrigatorio")
-    @Length(min = 3, max = 15 ,message = "A nota deve ter entre 1 e 15 digitos.")
-    private String note;
+    @NotNull(message = "Nota é obrigatorio")
+    private int note;
     
     @Column(nullable = false, length = 256, unique = false, updatable = true)
     @NotBlank(message = "Descrição é obrigatorio")
@@ -77,7 +76,7 @@ public class Evaluation implements Serializable{
     public Evaluation() {
     }
 
-    public Evaluation(Long id, String restaurantName, String restaurantCategory, String restaurantLocation, Calendar date, String note, String description, Client client) {
+    public Evaluation(Long id, String restaurantName, String restaurantCategory, String restaurantLocation, Calendar date, int note, String description, Client client) {
         this.id = id;
         this.restaurantName = restaurantName;
         this.restaurantCategory = restaurantCategory;
@@ -129,11 +128,11 @@ public class Evaluation implements Serializable{
         this.date = date;
     }
 
-    public String getNote() {
+    public int getNote() {
         return note;
     }
 
-    public void setNote(String note) {
+    public void setNote(int note) {
         this.note = note;
     }
 

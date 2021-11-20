@@ -21,19 +21,35 @@
                     <div class="collapse navbar-collapse" id="textNavbar">
                         <ul class="navbar-nav mr-auto" >
                             <li class="nav-item" th:cellpadding="@{page == 'clients' ? 'active' : ''}" >
-                                <a class="nav-link" th:href="@{~/client}" >Clients</a>
+                                <a class="nav-link" th:href="@{~/clients}" >Clients</a>
                             </li>
-                            <li class="nav-item" th:cellpadding="@{page == 'admin' ? 'active' : ''}" >
-                                <a class="nav-link" th:href="@{~/admin}" >Admins</a>
+                            <li class="nav-item" th:cellpadding="@{page == 'admins' ? 'active' : ''}" >
+                                <a class="nav-link" th:href="@{~/admins}" >Admins</a>
                             </li><li class="nav-item" th:cellpadding="@{page == 'evaluations' ? 'active' : ''}" >
                                 <a class="nav-link" th:href="@{~/evaluations}" >Evaluations</a>
                             </li>
-                            <li class="nav-item" th:cellpadding="@{page == 'comment' ? 'active' : ''}" >
-                                <a class="nav-link" th:href="@{~/comment}" >Comments</a>
+                            <li class="nav-item" th:cellpadding="@{page == 'comments' ? 'active' : ''}" >
+                                <a class="nav-link" th:href="@{~/comments}" >Comments</a>
                             </li>
                         </ul>
                     </div>
                 </nav>
+            </div>
+        </div>
+        
+        <div th:fragment="messages" >
+            <div th:if="${not #strings.isEmpty(msgErros)}" class="alert alert-danger alert-dismissible fase show" style="margin-top: 20px" role="alert">
+                <p th:each="msg : ${msgErros}" th:text="${msg.getDefaultMessage()}" ></p>
+                <button type="button" class="close" aria-label="Close" data-dismiss="alert">
+                    <span aria-hidden="true" >&times;</span>
+                </button>
+            </div>
+            
+            <div th:if="${not #strings.isEmpty(msgSuccess)}" class="alert alert-success alert-dismissible fase show" role="alert">
+                <p th:each="m : ${msgSuccess}" th:text="${m}" ></p>
+                <button type="button" class="close" aria-label="Close" data-dismiss="alert">
+                    <span aria-hidden="true" >&times;</span>
+                </button>
             </div>
         </div>
         

@@ -35,7 +35,7 @@ public class AdminService {
     }
     
     public Admin save(Admin c){
-        verificaLogin(c.getToken());
+        verificaLogin(c.getToken(), c.getLogin(), c.getEmail());
         try{
             return repo.save(c);
         }catch(Exception e){
@@ -47,13 +47,14 @@ public class AdminService {
         Optional<Admin> obj = findById(c.getId());
         
         try{
+            c.setId(obj.get().getId());
             return repo.save(c);
         }catch(Exception e){
             throw new RuntimeException("Falha ao atualizar Admn");
         }
     }
     
-    public void delete(int id){
+    public void delete(long id){
         Optional<Admin> obj = findById(id);
 
         try{
@@ -70,12 +71,19 @@ public class AdminService {
         }
     }
 
-    
-    private void verificaLogin(long token){
-        List<User> result = (List<User>) repo.findByToken(token);
-        if(!result.isEmpty()){
+    private void verificaLogin(Long token, String login, String email){
+        User resultToken = repo.findByToken(token);
+        if(resultToken != null){
             throw new RuntimeException("token ja cadastrado");
         }
+        User resultLogin = repo.findByLogin(login);
+        if(resultLogin != null){
+            throw new RuntimeException("login ja cadastrado");
+        }
+        User resultEmail = repo.findByEmail(email);
+        if(resultEmail != null){
+            throw new RuntimeException("Email ja cadastrado");
+        }   
     }
 }
 

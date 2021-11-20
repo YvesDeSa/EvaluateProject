@@ -1,0 +1,50 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
+    <head th:replace="~{fragments :: import-css(title='Evaluation System - Create comment')}" >
+        <title>...</title>
+    </head>
+    <body>
+        <div th:replace="~{fragments :: menu-bar(page = 'Comments')}" ></div>
+         
+        <div class="container px-0" style="margin-top: 30px" >
+            
+            <div class="card-header">
+                <h3>
+                    Create Comment
+                    <a class="btn btn-primary float-right" role="button" th:href="@{~/comments}">Return</a>
+                </h3> 
+            </div>
+            
+            <div th:replace="~{fragments :: messages}" ></div>
+            
+            <form th:object="${comment}" th:action="@{~/comments/comment/{id}(id=${comment.id})}"  enctype="multipart/form-data" method="post" class="card-body">
+                <input type="hidden" th:field="*{id}"/>
+                <div class="form-row" >
+                    <div class="form-group col-md-12">
+                        <label for="name" >Description </label>
+                        <input th:field="*{description}" type="text" class="form-control" th:placeholder="Description" required="required" maxlength="100"/>
+                    </div>
+                    
+                    <div class="form-group col-md-6">
+                        <label>Cliente:</label>
+                        <select class="form-control" th:field="*{client}">
+                            <option th:each="cli : ${client}" th:text="${cli.name}" th:value="${cli.id}"></option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group col-md-6">
+                        <label>Evaluation:</label>
+                        <select class="form-control" th:field="*{evaluation}">
+                            <option th:each="eva : ${evaluation}" th:text="${eva.restaurantName}" th:value="${eva.id}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div style="margin-top: 10px" >
+                    <input style="padding: 5px 50px" type="submit" class="btn btn-success" value="Save" />
+                </div>
+            </form>
+            
+        </div>
+        
+        <div th:replace="~{fragments :: imports-js}" />
+    </body>
+</html>
