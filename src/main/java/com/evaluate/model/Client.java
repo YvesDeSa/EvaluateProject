@@ -5,8 +5,11 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Length;
 
 @Entity
@@ -27,6 +30,10 @@ public class Client extends User{
     
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "client", orphanRemoval = true)
     private List<Evaluation> evaluations = new ArrayList<>();
+    
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Size(min = 1, message = "Cliente deve ter noi minimo 1 permissão")
+    private List<Permit> permits;
 
     public Client() {
     }
@@ -67,6 +74,14 @@ public class Client extends User{
 
     public void setEvaluations(List<Evaluation> evaluations) {
         this.evaluations = evaluations;
+    }
+
+    public List<Permit> getPermits() {
+        return permits;
+    }
+
+    public void setPermits(List<Permit> permits) {
+        this.permits = permits;
     }
     
 }

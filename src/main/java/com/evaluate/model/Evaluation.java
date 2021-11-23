@@ -26,7 +26,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Evaluation implements Serializable{
-    private static final long serialVersionUID = 1L;
+    private static final Long serialVersionUID = 1L;
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

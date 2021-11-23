@@ -15,7 +15,7 @@ import org.hibernate.validator.constraints.Length;
 
 @Entity
 public class Comment implements Serializable{
-    private static final long serialVersionUID = 1L;
+    private static final Long serialVersionUID = 1L;
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
