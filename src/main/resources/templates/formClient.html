@@ -41,7 +41,16 @@
                         <label for="Description" >Password: </label>
                         <input th:field="*{password}" type="password" class="form-control" th:placeholder="Password" required="required" maxlength="256"/>
                     </div>
-                    
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label>Permits:</label>
+                             <div class="form-check form-check-inline" th:each="permit , i : ${permits}">
+                                <input class="form-check-input" type="checkbox" th:name="${'permit['+i.index+'].id'}"  th:value="${permit.id}" th:checked="${#lists.contains(client.permits, permit)? 'checked' : false}" />
+                                <label class="form-check-label" th:text="${permit.name}">t</label>
+                            </div>
+                        </div>
+                     </div>
+             
                 </div>
                 <div style="margin-top: 10px" >
                     <input style="padding: 5px 50px" type="submit" class="btn btn-success" value="Save" />

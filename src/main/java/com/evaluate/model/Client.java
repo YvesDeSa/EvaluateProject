@@ -32,8 +32,8 @@ public class Client extends User{
     private List<Evaluation> evaluations = new ArrayList<>();
     
     @ManyToMany(fetch = FetchType.EAGER)
-    @Size(min = 1, message = "Cliente deve ter noi minimo 1 permissão")
-    private List<Permit> permits;
+    @Size(min = 1, message = "Cliente deve ter no minimo 1 permissão")
+    private List<Permit> permits = new ArrayList<>();
 
     public Client() {
     }

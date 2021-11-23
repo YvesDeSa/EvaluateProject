@@ -2,6 +2,7 @@ package com.evaluate.service;
 
 import com.evaluate.exception.NotFoundException;
 import com.evaluate.model.Client;
+import com.evaluate.model.Permit;
 import com.evaluate.model.User;
 import com.evaluate.repository.ClientRepository;
 import org.springframework.data.domain.Pageable;
@@ -10,6 +11,7 @@ import java.util.Optional;
 import javax.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -37,7 +39,10 @@ public class ClientService {
     
     public Client save(Client c){
         verificaLogin(c.getLogin(), c.getEmail());
+        removeNullPermissions(c);
+        
         try{
+            c.setPassword(new BCryptPasswordEncoder().encode(c.getPassword()));
             return repo.save(c);
         }catch(Exception e){
             Throwable t = e;
@@ -54,8 +59,11 @@ public class ClientService {
     public Client update(Client c){
         Optional<Client> obj = findById(c.getId());
         
+        removeNullPermissions(c);
+        
         try{
             c.setId(obj.get().getId());
+            c.setPassword(new BCryptPasswordEncoder().encode(c.getPassword()));
             return repo.save(c);
         }catch(Exception e){
             throw new RuntimeException("Falha ao atualizar cliente");
@@ -81,5 +89,14 @@ public class ClientService {
         if(resultEmail != null){
             throw new RuntimeException("Email ja cadastrado");
         }  
+    }
+    
+    private void removeNullPermissions(Client c){
+        c.getPermits().removeIf((Permit permit) -> {
+            return permit.getId() == null;
+        });
+        if(c.getPermits().isEmpty()){
+            throw new RuntimeException("Cliente precisa de pelo menos 1 permissão");
+        }
     }
 }

@@ -4,16 +4,19 @@ import com.evaluate.model.Admin;
 import com.evaluate.model.Client;
 import com.evaluate.model.Comment;
 import com.evaluate.model.Evaluation;
+import com.evaluate.model.Permit;
 import com.evaluate.repository.AdminRepository;
 import com.evaluate.repository.ClientRepository;
 import com.evaluate.repository.CommentRepository;
 import com.evaluate.repository.EvaluationRepository;
+import com.evaluate.repository.PermitRepository;
 import java.util.Calendar;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 public class EvaluateApplication  implements CommandLineRunner{
@@ -26,6 +29,8 @@ public class EvaluateApplication  implements CommandLineRunner{
     private EvaluationRepository evaluationRepo;
     @Autowired
     private CommentRepository commentRepo;
+    @Autowired
+    private PermitRepository permitRepo;
     
     
     public static void main(String[] args) {
@@ -34,6 +39,14 @@ public class EvaluateApplication  implements CommandLineRunner{
 
     @Override
     public void run(String... args) throws Exception {
+       Permit p1 = new Permit();
+       p1.setName("ADMIN");
+       
+       Permit p2 = new Permit();
+       p2.setName("CLIENT");
+       
+       permitRepo.saveAll(List.of(p1,p2));
+        
         
        Admin admin1 = new Admin();
        admin1.setLogin("Maria");
@@ -45,19 +58,21 @@ public class EvaluateApplication  implements CommandLineRunner{
        
        Client client1 = new Client();
        client1.setLogin("Carlos123");
-       client1.setPassword("12345");
+       client1.setPassword(new BCryptPasswordEncoder().encode("12345"));
        client1.setEmail("Carlos@gmail.com");
        client1.setName("Carlos");
        client1.setCity("Campos");
+       client1.setPermits(List.of(p1));
        
        clientRepo.save(client1);
        
        Client client2 = new Client();
        client2.setLogin("monicaGS");
-       client2.setPassword("ffdrs");
+       client2.setPassword(new BCryptPasswordEncoder().encode("1234578"));
        client2.setEmail("MGS@gmail.com");
        client2.setName("Monica");
        client2.setCity("Marataizes");
+       client2.setPermits(List.of(p2));
        
        clientRepo.save(client2);
        

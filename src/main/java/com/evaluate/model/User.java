@@ -34,7 +34,7 @@ public abstract class User implements Serializable{
     
     @Column(nullable = false, unique = false, updatable = true)
     @NotBlank(message = "senha obrigatorio")
-    @Length(min = 3, max = 15 ,message = "A senha deve ter entre 3 e 15 digitos.")
+    @Length(min = 3 ,message = "A senha deve ser maior 3 digitos.")
     private String password;
 
     public User() {

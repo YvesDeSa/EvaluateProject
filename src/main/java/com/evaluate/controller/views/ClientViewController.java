@@ -1,6 +1,7 @@
 package com.evaluate.controller.views;
 
 import com.evaluate.model.Client;
+import com.evaluate.repository.PermitRepository;
 import com.evaluate.service.ClientService;
 import com.evaluate.service.CommentService;
 import com.evaluate.service.EvaluationService;
@@ -26,6 +27,8 @@ public class ClientViewController {
     private EvaluationService evaluation;
     @Autowired
     private CommentService comment;
+    @Autowired
+    private PermitRepository permit;
     
     
     @GetMapping
@@ -33,6 +36,7 @@ public class ClientViewController {
         model.addAttribute("clients", service.findAll());
         model.addAttribute("evaluation", evaluation.findAll());
         model.addAttribute("comment", comment.findAll());
+        model.addAttribute("permits", permit.findAll());
         
         return "clients";
     }
@@ -41,12 +45,15 @@ public class ClientViewController {
     public String evaluations(Model model){
         model.addAttribute("client", new Client());
         model.addAttribute("evaluation", evaluation.findAll());
-        model.addAttribute("comment", comment.findAll());
+        model.addAttribute("permits", permit.findAll());
+        
         return "formClient";
     }
     
     @PostMapping(path = "/client")
     public String save(@Valid @ModelAttribute Client client, BindingResult result , Model model){
+        
+        model.addAttribute("permits", permit.findAll());
         
         if(result.hasErrors()){
             model.addAttribute("msgErros", result.getAllErrors());
@@ -71,11 +78,15 @@ public class ClientViewController {
         model.addAttribute("client", service.findById(id).get());
         model.addAttribute("evaluation", evaluation.findAll());
         model.addAttribute("comment", comment.findAll());
+        model.addAttribute("permits", permit.findAll());
+        
         return "formClient";
     }
     
     @PostMapping(path = "/client/{id}")
     public String update(@Valid @ModelAttribute Client client, @PathVariable("id") Long id, BindingResult result , Model model){
+        
+        model.addAttribute("permits", permit.findAll());
         
         if(result.hasErrors()){
             model.addAttribute("msgErros", result.getAllErrors());
