@@ -28,6 +28,10 @@ public class ClientService {
         return (List<Client>) repo.findAll();
     }
     
+    public Client findByEmail(String email){
+        return repo.findByEmail(email);
+    }
+    
     public Optional<Client> findById(long id){
         Optional<Client> result = repo.findById(id);
         

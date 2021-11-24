@@ -1,4 +1,4 @@
-<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" >
     <head th:fragment="import-css(title)" >
         <title th:text="${tittle}" >Evaluation Application</title>
         <meta charset="UTF-8"/>
@@ -23,15 +23,20 @@
                             <li class="nav-item" th:cellpadding="@{page == 'clients' ? 'active' : ''}" >
                                 <a class="nav-link" th:href="@{~/clients}" >Clients</a>
                             </li>
-                            <li class="nav-item" th:cellpadding="@{page == 'admins' ? 'active' : ''}" >
+                            <li class="nav-item" th:cellpadding="@{page == 'admins' ? 'active' : ''}" sec:authorize="hasRole('ROLE_ADMIN')">
                                 <a class="nav-link" th:href="@{~/admins}" >Admins</a>
-                            </li><li class="nav-item" th:cellpadding="@{page == 'evaluations' ? 'active' : ''}" >
+                            </li>
+                            <li class="nav-item" th:cellpadding="@{page == 'evaluations' ? 'active' : ''}" >
                                 <a class="nav-link" th:href="@{~/evaluations}" >Evaluations</a>
                             </li>
-                            <li class="nav-item" th:cellpadding="@{page == 'comments' ? 'active' : ''}" >
+                            <li class="nav-item" th:cellpadding="@{page == 'comments' ? 'active' : ''}" sec:authorize="hasRole('ROLE_ADMIN')">
                                 <a class="nav-link" th:href="@{~/comments}" >Comments</a>
                             </li>
+                            <li class="nav-item" th:cellpadding="@{page == 'mydatas' ? 'active' : ''}" >
+                                <a class="nav-link" th:href="@{~/clients/mydatas}" >My Datas</a>
+                            </li>
                         </ul>
+                        <a sec:authorize="isAuthenticated()" class="btn btn-danger" style="float: right" th:href="@{~/logout}" role="button">Logout</a>
                     </div>
                 </nav>
             </div>

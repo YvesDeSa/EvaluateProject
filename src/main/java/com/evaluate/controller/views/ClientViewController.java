@@ -1,12 +1,14 @@
 package com.evaluate.controller.views;
 
 import com.evaluate.model.Client;
+import com.evaluate.model.User;
 import com.evaluate.repository.PermitRepository;
 import com.evaluate.service.ClientService;
 import com.evaluate.service.CommentService;
 import com.evaluate.service.EvaluationService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -55,7 +57,7 @@ public class ClientViewController {
         
         model.addAttribute("permits", permit.findAll());
         
-        if(result.hasErrors()){
+        if(result.hasErrors()){ 
             model.addAttribute("msgErros", result.getAllErrors());
             return "formClient";
         }
@@ -111,6 +113,39 @@ public class ClientViewController {
 
         service.delete(id);
         return "redirect:/clients";
+    }
+    
+    @GetMapping(path = "/mydatas")
+    public String getMyDatas(@AuthenticationPrincipal User user, Model model){
+        Client client = service.findByEmail(user.getEmail());
+        model.addAttribute("client", client);
+        
+        return "formMyDatas";
+    }
+    
+    @PostMapping(path = "/mydatas")
+    public String updateMyDatas(
+            @Valid @ModelAttribute Client client,
+            BindingResult result,
+            @AuthenticationPrincipal User user,
+            Model model) {
+       
+        Client clientDB = service.findByEmail(user.getEmail());
+        
+        if(!clientDB.getId().equals(client.getId())){
+            throw new RuntimeException("Acesso negado.");
+        }
+        
+        try {
+            client.setPermits(clientDB.getPermits());
+            service.update(client);
+            model.addAttribute("msgSucesso", "Cliente atualizado com sucesso.");
+            model.addAttribute("client", client);
+            return "formMyDatas";
+        } catch (Exception e) {
+            model.addAttribute("msgErros", new ObjectError("client", e.getMessage()));
+           return "formMyDatas";
+        }
     }
 }
 
