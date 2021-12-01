@@ -50,8 +50,9 @@ public class EvaluateApplication  implements CommandLineRunner{
         
        Admin admin1 = new Admin();
        admin1.setLogin("Maria");
-       admin1.setPassword("abc12");
+       admin1.setPassword(new BCryptPasswordEncoder().encode("123"));
        admin1.setEmail("Maria44@gmail.com");
+       admin1.setPermits(List.of(p1));
        admin1.setToken(23l);
        
        adminRepo.save(admin1);
@@ -62,7 +63,7 @@ public class EvaluateApplication  implements CommandLineRunner{
        client1.setEmail("Carlos@gmail.com");
        client1.setName("Carlos");
        client1.setCity("Campos");
-       client1.setPermits(List.of(p1));
+       client1.setPermits(List.of(p2));
        
        clientRepo.save(client1);
        

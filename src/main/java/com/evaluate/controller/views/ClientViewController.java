@@ -44,7 +44,7 @@ public class ClientViewController {
     }
     
     @GetMapping(path = "/client")
-    public String evaluations(Model model){
+    public String clients(Model model){
         model.addAttribute("client", new Client());
         model.addAttribute("evaluation", evaluation.findAll());
         model.addAttribute("permits", permit.findAll());
@@ -76,7 +76,7 @@ public class ClientViewController {
     }
     
     @GetMapping(path = "/client/{id}")
-    public String evaluation( @PathVariable("id") Long id, Model model){
+    public String clients( @PathVariable("id") Long id, Model model){
         model.addAttribute("client", service.findById(id).get());
         model.addAttribute("evaluation", evaluation.findAll());
         model.addAttribute("comment", comment.findAll());

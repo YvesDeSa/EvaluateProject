@@ -12,8 +12,9 @@ import com.evaluate.exception.PropertyError;
 import com.evaluate.exception.ValidatioError;
 import javax.validation.ConstraintViolationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.RestController;
 
-@RestControllerAdvice
+@RestControllerAdvice(annotations = RestController.class)
 public class MyRestControlllerAdvice {
     
     @ExceptionHandler(MethodArgumentNotValidException.class)
