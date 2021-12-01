@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-public class Admin extends User{
+public class Admin extends UserApp{
     
     @Column(nullable = false, unique = false, updatable = true)
     @NotNull(message = "token não pode ser nulo")

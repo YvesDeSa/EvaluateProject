@@ -2,7 +2,7 @@ package com.evaluate.service;
 
 import com.evaluate.exception.NotFoundException;
 import com.evaluate.model.Admin;
-import com.evaluate.model.User;
+import com.evaluate.model.UserApp;
 import com.evaluate.repository.AdminRepository;
 import java.util.List;
 import java.util.Optional;
@@ -72,15 +72,15 @@ public class AdminService {
     }
 
     private void verificaLogin(Long token, String login, String email){
-        User resultToken = repo.findByToken(token);
+        UserApp resultToken = repo.findByToken(token);
         if(resultToken != null){
             throw new RuntimeException("token ja cadastrado");
         }
-        User resultLogin = repo.findByLogin(login);
+        UserApp resultLogin = repo.findByLogin(login);
         if(resultLogin != null){
             throw new RuntimeException("login ja cadastrado");
         }
-        User resultEmail = repo.findByEmail(email);
+        UserApp resultEmail = repo.findByEmail(email);
         if(resultEmail != null){
             throw new RuntimeException("Email ja cadastrado");
         }   

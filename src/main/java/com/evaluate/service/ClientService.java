@@ -3,7 +3,7 @@ package com.evaluate.service;
 import com.evaluate.exception.NotFoundException;
 import com.evaluate.model.Client;
 import com.evaluate.model.Permit;
-import com.evaluate.model.User;
+import com.evaluate.model.UserApp;
 import com.evaluate.repository.ClientRepository;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
@@ -85,11 +85,11 @@ public class ClientService {
     }
     
     private void verificaLogin(String login, String email){
-        User result =  repo.findByLogin(login);
+        UserApp result =  repo.findByLogin(login);
         if(result != null){
             throw new RuntimeException("Login ja cadastrado");
         }
-         User resultEmail = repo.findByEmail(email);
+         UserApp resultEmail = repo.findByEmail(email);
         if(resultEmail != null){
             throw new RuntimeException("Email ja cadastrado");
         }  

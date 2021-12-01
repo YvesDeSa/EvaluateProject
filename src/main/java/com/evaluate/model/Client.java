@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Length;
 
 @Entity
-public class Client extends User{
+public class Client extends UserApp{
     
     @Column(nullable = false, length = 55, unique = false, updatable = true)
     @NotBlank(message = "Nome obrigatorio")

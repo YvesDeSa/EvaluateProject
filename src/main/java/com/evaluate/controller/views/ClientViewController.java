@@ -1,7 +1,7 @@
 package com.evaluate.controller.views;
 
 import com.evaluate.model.Client;
-import com.evaluate.model.User;
+import com.evaluate.model.UserApp;
 import com.evaluate.repository.PermitRepository;
 import com.evaluate.service.ClientService;
 import com.evaluate.service.CommentService;
@@ -116,7 +116,7 @@ public class ClientViewController {
     }
     
     @GetMapping(path = "/mydatas")
-    public String getMyDatas(@AuthenticationPrincipal User user, Model model){
+    public String getMyDatas(@AuthenticationPrincipal UserApp user, Model model){
         Client client = service.findByEmail(user.getEmail());
         model.addAttribute("client", client);
         
@@ -127,7 +127,7 @@ public class ClientViewController {
     public String updateMyDatas(
             @Valid @ModelAttribute Client client,
             BindingResult result,
-            @AuthenticationPrincipal User user,
+            @AuthenticationPrincipal UserApp user,
             Model model) {
        
         Client clientDB = service.findByEmail(user.getEmail());
